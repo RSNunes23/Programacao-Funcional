@@ -65,6 +65,7 @@ inits2 :: [a] -> [[a]]
 inits2 [] = []
 inits2 l = inits2 (init l) ++ [l]
 
+
 --14. 
 tails2 :: [a] -> [[a]]
 tails2 [] = []
@@ -98,10 +99,12 @@ idade2 n m ((a,b):t) | n - b >= m = a : idade2 n m t
                      | otherwise = idade2 n m t
 
 --20. 
-powerEnumFrom2 :: Int -> Int -> [Int]
-powerEnumFrom2 _ 1 = [1]
-powerEnumFrom2 n m | m < 1 = []
-                   | otherwise = powerEnumFrom2 n (m - 1) ++ [n^(m-1)]
+powerEnumFromA :: Int -> Int -> Int -> [Int]
+powerEnumFromA a 0 i = []
+powerEnumFromA a b i | i==b = []
+                     | otherwise = (a^i):powerEnumFromA a b (i+1)
+powerEnumFrom :: Int -> Int -> [Int]
+powerEnumFrom a b = powerEnumFromA a b 0
 
 --21. 
 isPrime2 :: Int -> Bool
