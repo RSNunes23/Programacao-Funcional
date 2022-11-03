@@ -5,10 +5,10 @@ enumFromTo2 a b | a > b = []
 
 --2. 
 enumFromThenTo2 :: Int -> Int -> Int -> [Int]
-enumFromThenTo2 start next end
-    | start > end && next >= start = []
-    | start < end && next < start = []
-    | otherwise = start : enumFromThenTo2 next (2 * next - start) end
+enumFromThenTo2 a b c
+    | a > c && b >= a = []
+    | a < c && b <= a = []
+    | otherwise = a : enumFromThenTo2 b (2 * b - a) c
 
 --3. 
 (+++) :: [a] -> [a] -> [a]
