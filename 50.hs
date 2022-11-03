@@ -6,26 +6,26 @@ enumFromTo2 a b | a > b = []
 --2. 
 enumFromThenTo2 :: Int -> Int -> Int -> [Int]
 enumFromThenTo2 a b c
-    | a > c && b >= a = []
+    | a > c = []
     | a < c && b <= a = []
     | otherwise = a : enumFromThenTo2 b (2 * b - a) c
 
 --3. 
 (+++) :: [a] -> [a] -> [a]
-(+++) [] l = l
-(+++) (h:t) l = h : (+++) t l
+(+++) [] (h:t) = (h:t)
+(+++) (h:t) (h':t') = h : (+++) t (h':t')
 
 --4. 
 (!!!) :: [a] -> Int -> a
-(!!!) (h:t) x | x == 0 = h 
-              | otherwise = (!!!) t (x - 1)
+(!!!) (h:t) n | n == 0 = h 
+              | otherwise = (!!!) t (n - 1)
 
 --5. 
 reverse2 :: [a] -> [a]
 reverse2 [] = []
 reverse2 (h:t) = t ++ reverse2 [h]
 
---6.
+--6. 
 take2 :: Int -> [a] -> [a]
 take2 _ [] = []
 take2 n (h:t) | n <= 0 = []
@@ -43,7 +43,7 @@ zip2 _ [] = []
 zip2 [] _ = []
 zip2 (h:t) (h':t') = (h,h') : zip2 t t'
 
---9.
+--9. 
 replicate2 :: Int -> a -> [a]
 replicate2 0 _ = []
 replicate2 n m | n < 0 = [] 
@@ -60,7 +60,7 @@ concat2 :: [[a]] -> [a]
 concat2 [[]] = []
 concat2 (h:t) = h ++ concat2 t
 
---13.
+--13. 
 inits2 :: [a] -> [[a]]
 inits2 [] = []
 inits2 l = inits2 (init l) ++ [l]
@@ -122,13 +122,13 @@ isPrefixOf2 (h:t) (h':t') = h == h' && isPrefixOf2 t t'
 isSuffixOf2 :: Eq a => [a] -> [a] -> Bool
 isSuffixOf2 [] _ = True
 isSuffixOf2 _ [] = False
-isSuffixOf2 (h:t) (h':t') | h == h' = isSuffixOf2 t t'
+isSuffixOf2 (h:t) (h':t') | h == h' = False
                           | otherwise = isSuffixOf2 (h:t) t'
 
 --24. 
 isSubsequenceOf2 :: Eq a => [a] -> [a] -> Bool
-isSubsequenceOf2 _ [] = False
 isSubsequenceOf2 [] _ = True
+isSubsequenceOf2 _ [] = False
 isSubsequenceOf2 (h:t) (h':t') = h == h' && isSubsequenceOf2 t t' || isSubsequenceOf2 (h:t) t'
 
 --25. 
@@ -199,7 +199,7 @@ lookup2 n ((a,b):t) | n == a = Just b
 preCrescente :: Ord a => [a] -> [a]
 preCrescente [] = []
 preCrescente [l] = [l]
-preCrescente (h:s:t) | s >= h = h :preCrescente (s:t)
+preCrescente (h:s:t) | s >= h = h : preCrescente (s:t)
                      | otherwise = [h]
 
 --37. 
@@ -252,60 +252,13 @@ partitionEithers ((Left a):t) = (a : as,bs)
 partitionEithers ((Right b):t) = (as,b : bs)
     where (as,bs) = partitionEithers t
 
---45. 
+--45.
 catMaybes :: [Maybe a] -> [a]
 catMaybes [] = []
-catMaybes ((Just h):t) = h :catMaybes t
+catMaybes ((Just h):t) = h : catMaybes t
 catMaybes (Nothing:t) = catMaybes t
 
---46. 
-data Movimento = Norte | Sul | Este | Oeste
-               deriving Show
-
-caminho :: (Int,Int) -> (Int,Int) -> [Movimento]
-caminho (xi, yi) (xf, yf) | xi < xf = Este : caminho (xi + 1, yi) (xf, yf)
-                          | xi > xf = Oeste : caminho (xi - 1, yi) (xf, yf)
-                          | yi < yf = Norte : caminho (xi, yi + 1) (xf, yf)
-                          | yi > yf = Sul : caminho (xi, yi - 1) (xf, yf)
-                          | otherwise = []
-
---47. 
-data Movimento = Norte | Sul | Este | Oeste
-               deriving Show
-
-posicao :: (Int,Int) -> [Movimento] -> (Int,Int)posicao p [] = p
-posicao (x, y) (Norte:t) = posicao (x, y + 1) t
-posicao (x, y) (Sul:t) = posicao (x, y - 1) t
-posicao (x, y) (Este:t) = posicao (x + 1, y) t
-posicao (x, y) (Oeste:t) = posicao (x - 1, y) t
-
-
-hasLoops :: (Int,Int) -> [Movimento] -> Bool
-hasLoops _ [] = False
-hasLoops posi movs = posi == posicao posi movs || hasLoops posi (init movs)
-
---48. 
-type Ponto = (Float,Float)
-data Rectangulo = Rect Ponto Ponto
-
-contaQuadrados :: [Rectangulo] -> Int
-contaQuadrados [] = 0
-contaQuadrados (h:t) 
-    | eQuadrado h = 1 + contaQuadrados t
-    | otherwise = contaQuadrados t
-
-eQuadrado :: Rectangulo -> Bool
-eQuadrado (Rect (x1,y1) (x2,y2)) = abs (y2 - y1) == abs (x2 - x1)
-
---49. 
-type Ponto = (Float,Float)
-data Rectangulo = Rect Ponto Ponto
-
-areaTotal :: [Rectangulo] -> Float
-areaTotal [] = 0
-areaTotal ((Rect (x1,y1) (x2,y2)):t) = abs (x2 - x1) * abs (y2 - y1) + areaTotal t
-
---50. 
+--50.
 data Equipamento = Bom | Razoavel | Avariado
                  deriving Show
 
