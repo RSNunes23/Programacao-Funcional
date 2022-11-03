@@ -103,6 +103,7 @@ powerEnumFromA :: Int -> Int -> Int -> [Int]
 powerEnumFromA a 0 i = []
 powerEnumFromA a b i | i==b = []
                      | otherwise = (a^i):powerEnumFromA a b (i+1)
+
 powerEnumFrom :: Int -> Int -> [Int]
 powerEnumFrom a b = powerEnumFromA a b 0
 
