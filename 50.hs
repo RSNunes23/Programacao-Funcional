@@ -161,14 +161,14 @@ remove2 l (h:t) = remove2 (delete2 h l) t
 --29. 
 union2 :: Eq a => [a] -> [a] -> [a]
 union2 l [] = l
-union2 l (h:t) | h `elem` l = union2 l t
+union2 l (h:t) | h elem l = union2 l t
                | otherwise = union2 (l ++ [h]) t
 
 --30. 
 intersect2 :: Eq a => [a] -> [a] -> [a]
 intersect2 [] _ = []
-intersect2 (h:t) l | h `elem` l = h : intersect2 t l
-                         | otherwise = intersect2 t l
+intersect2 (h:t) l | h elem l = h : intersect2 t l
+                   | otherwise = intersect2 t l
 
 --31. 
 insert2 :: Ord a => a -> [a] -> [a]
