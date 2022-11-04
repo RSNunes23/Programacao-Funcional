@@ -126,8 +126,7 @@ isPrefixOf2 (h:t) (h':t') = h == h' && isPrefixOf2 t t'
 isSuffixOf2 :: Eq a => [a] -> [a] -> Bool
 isSuffixOf2 [] _ = True
 isSuffixOf2 _ [] = False
-isSuffixOf2 (h:t) (h':t') | h == h' = isSuffixOf2 t t'
-                          | otherwise = isSuffixOf2 (h:t) t'
+isSuffixOf2 l l'@(_:t) = l == l' || isSuffixOf2 l t
 
 --24. 
 isSubsequenceOf2 :: Eq a => [a] -> [a] -> Bool
